@@ -33,13 +33,11 @@ val_loader = DataLoader(val_set, batch_size=32)
 # Step 2: Initialize the ResNet Model
 
 # Load a pretrained ResNet model
-model = models.resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
+model = models.resnet50(weights=ResNet50_Weights.IMAGENET1K_V1).to(device)
 
 # Setup device - Use GPU if available
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = model.to(device)
-
-print(f'Using device: {device}')
 
 # Modify the final layer for your number of classes
 num_classes = len(dataset.classes)
@@ -65,15 +63,13 @@ def calculate_accuracy(outputs, labels):
 num_epochs = 10  # Set the number of epochs
 
 # Main loop for epochs
-
-        inputs, labels = inputs.to(device), labels.to(device)for epoch in range(num_epochs):
+for epoch in range(num_epochs):
     # Training Phase
     model.train()
     running_loss = 0.0
     running_accuracy = 0.0
     pbar = tqdm(enumerate(train_loader), total=len(train_loader))
     for i, (inputs, labels) in pbar:
-        inputs, labels = inputs.to(device), labels.to(device)
         optimizer.zero_grad()
         outputs = model(inputs.to(device))
         loss = criterion(outputs, labels)
@@ -85,17 +81,12 @@ num_epochs = 10  # Set the number of epochs
         pbar.set_description(f'Epoch {epoch + 1}/{num_epochs} [Loss: {running_loss / (i+1):.4f}, Accuracy: {running_accuracy / (i+1):.2f}%]')
 
     # Validation Phase
-    
-    with torch.no_grad():
-        for inputs, labels in val_loader:
-            inputs, labels = inputs.to(device), labels.to(device)
-        with torch.no_grad():
-            for inputs, labels in val_loader:
-                inputs, labels = inputs.to(device), labels.to(device)model.eval()  # Set the model to evaluation mode
+    model.eval()  # Set the model to evaluation mode
     total = 0
     correct = 0
     with torch.no_grad():
         for inputs, labels in val_loader:
+        inputs, labels = inputs.to(device), labels.to(device)
         inputs, labels = inputs.to(device), labels.to(device)
             outputs = model(inputs.to(device))
             _, predicted = torch.max(outputs.data, 1)
@@ -118,7 +109,6 @@ for epoch in range(num_epochs):  # Assuming 'num_epochs' is defined in the origi
     model.train()
     pbar = tqdm(enumerate(train_loader), total=len(train_loader))
     for i, (inputs, labels) in pbar:
-        inputs, labels = inputs.to(device), labels.to(device)
         optimizer.zero_grad()
         outputs = model(inputs.to(device))
         loss = criterion(outputs, labels)
