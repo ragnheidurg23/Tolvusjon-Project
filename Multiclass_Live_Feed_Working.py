@@ -7,7 +7,7 @@ from torchvision import models
 model = models.efficientnet_b0(pretrained=True)
 
 # Load the state dictionary
-state_dict = torch.load('Models/Results_EfficientNetB0_dataset_all_all/model_weights.pth', map_location=torch.device('cpu'))
+state_dict = torch.load('Models/Results_EfficientNetB0_dataset_all_allCustom/model_weights.pth', map_location=torch.device('cpu'))
 
 # Load the state dictionary into the model
 model.load_state_dict(state_dict)
