@@ -1,4 +1,3 @@
-import tensorflow as tf
 from PIL import Image
 import pandas as pd
 import numpy as np
@@ -7,7 +6,6 @@ from keras import layers, models
 from keras.callbacks import ModelCheckpoint, EarlyStopping, TensorBoard
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
-from tqdm import tqdm
 import os
 
 
