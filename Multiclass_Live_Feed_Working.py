@@ -7,7 +7,7 @@ from torchvision import models
 model = models.efficientnet_b0(pretrained=True)
 
 # Load the state dictionary
-state_dict = torch.load('Models/Results_EfficientNetB0_dataset_0_3_all/model_weights.pth', map_location=torch.device('cpu'))
+state_dict = torch.load('Models/Results_EfficientNetB0_dataset_all_all/model_weights.pth', map_location=torch.device('cpu'))
 
 # Load the state dictionary into the model
 model.load_state_dict(state_dict)
@@ -29,7 +29,9 @@ cv2.resizeWindow("Live Feed", window_width, window_height)
 # Update this dictionary according to your model's classes
 class_names = {
     0: "Class 0",
-    1: "Class 3",
+    1: "Class 1",
+    2: "Class 2",
+    3: "Class 3",
     # Add other classes as necessary
 }
 
